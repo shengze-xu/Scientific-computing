@@ -1,0 +1,265 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage[toc,page]{appendix}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amssymb}
+\usepackage{bbm}
+\usepackage{extarrows}
+\usepackage{mathrsfs}
+\usepackage{CJK}
+\usepackage{dsfont}
+\usepackage[hidelinks]{hyperref}
+\usepackage{apacite}
+\usepackage{multirow, booktabs}  
+\usepackage{threeparttable}
+\usepackage{dcolumn}
+\usepackage{longtable}
+\usepackage{threeparttablex}
+\usepackage{tabu}
+\usepackage{pdfpages}
+\usepackage{float}
+\usepackage{changepage}
+\usepackage{mathtools}
+\usepackage{listings}
+
+\usetikzlibrary{automata,positioning}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+\setlength{\parindent}{0em}
+\linespread{1.1}
+
+\pagestyle{myheadings}
+\markboth{HW Solution}{Shengze Xu}
+\chead{\hmwkClass\ : \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+\newcommand{\hmwkTitle}{HW6 Solution}
+\newcommand{\hmwkDueDate}{\today}
+\newcommand{\hmwkClass}{Scientific Computing}
+\newcommand{\hmwkClassInstructor}{Professor Lai}
+\newcommand{\hmwkAuthorName}{Xu Shengze 3190102721}
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{\hmwkDueDate }\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ }}
+    \vspace{3in}
+}
+
+\author{\textbf{\hmwkAuthorName}}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+% Various Helper Commands
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\lstset{
+	basicstyle=\tt,%行号
+	numbers=left,
+	rulesepcolor=\color{red!20!green!20!blue!20},
+	escapeinside=``,
+	xleftmargin=2em,xrightmargin=2em, aboveskip=1em,%背景框
+	framexleftmargin=1.5mm,
+	frame=shadowbox,%背景色
+	backgroundcolor=\color[RGB]{245,245,244},%样式
+	keywordstyle=\color{blue}\bfseries,
+	identifierstyle=\bf,
+	numberstyle=\color[RGB]{0,192,192},
+	commentstyle=\it\color[RGB]{96,96,96},
+	stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},%显示空格
+	showstringspaces=false
+}
+
+\begin{document}
+\begin{CJK*}{GBK}{song}
+\lstset{language=MATLAB}
+\maketitle
+
+\pagebreak
+
+\begin{homeworkProblem}
+For $T_n(f)$, divide $[a,b]$ into $n$ equal parts, we have the equation $T_n(f)=\frac{h}{2}(f(x_0)+2f(x_1)+...+2f(x_{n-1})+f(x_n))=\frac{h}{2}\sum_{k=0}^{n-1}(f(x_k)+f(x_{k+1}))$, where $h=\frac{b-a}{n}$.
+
+$f(x)$ is continuous on $[a,b]$, so there is $\xi_k\in(x_k,x_{k+1})$, satisfying that $f(\xi_k)=\frac{f(x_k)+f(x_{k+1})}{2}$, then $T_n(f)=\sum_{k=0}^{n-1}h\cdot f(\xi_k)$.
+
+According to the definition, we could easily know that $\lim\limits_{n\to\infty}T_n(f)=\lim\limits_{n\to\infty}\sum_{k=0}^{n-1}h\cdot f(\xi_k)=\int_{a}^{b}f(x)dx$.
+
+For $S_n(f)$, divide $[a,b]$ into $2n$ equal parts, we also have $S_n(f)=\frac{h}{6}\sum_{k=1}^{n}(f(x_{2k-2})+4f(x_{2k-1})+f(x_{2k}))$.
+
+$f(x)$ is continuous on $[a,b]$, so there is $\eta_k\in(x_{2k-2},x_{2k})$, satisfying that $f(\eta_k)=\frac{f(x_{2k-2})+4f(x_{2k-1})+f(x_{2k})}{6}$, then $S_n(f)=\sum_{k=1}^{n}h\cdot f(\eta_k)$.
+
+$\lim\limits_{n\to\infty}S_n(f)=\lim\limits_{n\to\infty}\sum_{k=1}^{n}h\cdot f(\eta_k)=\int_{a}^{b}f(x)dx$.
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+Divide $[a,b]$ into $2n$ equal parts, assume that $h$ is $\frac{b-a}{n}$.
+
+According to $Problem1$, we already know that $S_n(f)=\frac{h}{6}\sum_{k=1}^{n}(f(x_{2k-2})+4f(x_{2k-1})+f(x_{2k}))$.
+
+The same, $T_{2n}(f)=\frac{h}{4}\sum_{k=1}^{n}(f(x_{2k-2})+2f(x_{2k-1})+f(x_{2k})))$ and $T_n(f)=\frac{h}{2}\sum_{k=1}^{n}(f(x_{2k-2})+f(x_{2k}))$.
+
+Therefore, according to the expression of $S_n(f)$, $T_n(f)$ and $T_{2n}(f)$, we have $\frac{4}{3}T_{2n}(f)-\frac{1}{3}T_n(f)=\frac{h}{6}\sum_{k=1}^{n}(2f(x_{2k-2})+4f(x_{2k-1})+2f(x_{2k})-f(x_{2k-2})-f(x_{2k}))=\frac{h}{6}\sum_{k=1}^{n}(f(x_{2k-2})+4f(x_{2k-1})+f(x_{2k}))=S_n(f)$.
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+$T_n(x)=\cos(n\arccos{x})$.
+\begin{itemize}
+\item[(a)]
+$T_{m+n}(x)+T_{m-n}(x)=\cos((m+n)\arccos{x})+\cos((m-n)\arccos{x})=2\cos(m\arccos{x})\cos(n\arccos{x})=2T_m(x)T_n(x)$.
+\item[(b)]
+$T_m(T_n(x))=\cos(m\arccos(\cos(n\arccos{x})))=\cos(mn\arccos{x})=T_{mn}(x)=\cos(n\arccos(\cos(m\arccos{x})))=T_n(T_m(x))$
+\item[(c)]$T_{n+1}(x)=2xT_n(x)-T_{n-1}(x)$, $T_0(x)=1$, $T_1(x)=x$. 
+
+Next, we use mathematical induction to prove the proposition.
+
+Apparently, when $n=1$, $n=2$, the proposition holds. 
+
+Assume that for $n\leq k$ the propositon holds.Then for $n=k+1$, $T_{k+1}(x)=2xT_{k}(x)-T_{k-1}(x)$, the degree of $T_{k+1}(x)$ is $k+1$, whose coefficient is $2^{k-1}\cdot 2=2^k$. Therefore, the proposition holds for $n=k+1$, inductive hypothesis holds.
+
+In summary, the original proposition is established.
+\end{itemize}
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+Define $f(y)=MT_n(y)-P_n(y)$. For $M=max|P(x)|$ on $[-1,1]$, we have $-M\leq P_n(y)\leq M$. 
+
+According to the properties of Chebyshev polynomials, we know that $-M\leq MT_n(y)\leq M$ and there is $n+1$ values let $MT_n(y)$ take $-M$ or $M$. 
+
+Therefore, $MT_n(y)$ and $P_n(y)$ have $n$ intersections, then $f(y)$ has $n$ zero points on $[-1,1]$. Meanwhile, the degree of $f(y)$ is no more than $n$, so there are no more than $n$ zero points. 
+
+Obviously, there is no zero point when $y\textgreater 1$ or $y\textless -1$. $T_n(1)=1$, so $f(1)=M-P_n(y)\geq 0$, then when $y\geq 1$, $f(1)\geq 0$. Therefore, we have $P_n(y)\leq MT_n(y)$.
+
+The same, if we define $g(y)=MT_n(y)+P_n(y)$, we can also get the conclusion that $g(1)\geq 0$, then $P_n(y)\geq -MT_n(y)$.
+
+In summary, we have the conclusion that $|P_n(y)|\leq M|T_n(y)|$ for every $y\textgreater 1$.
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+First, we define the function $comtrapezium(f,n,a,b)$.
+\begin{lstlisting}
+function ans=comtrapezium(f,n,a,b)
+	h=(b-a)/n;
+	sum=f(a);
+	for i=a+h:h:b-h 
+		sum=sum+2*f(i);
+	end
+	sum=sum+f(b);
+	ans=sum*h/2;
+end
+\end{lstlisting}
+Then, we should determine the value of $n$ and get the answer.
+\begin{lstlisting}
+format long e
+syms x1;
+f1=exp(x1)*sin(x1);
+ans=1.0/(1*10^(-6))/12*double(max(abs(subs(diff(f1,x1,2),x1,[1:0.001:2]))));
+n=ceil(sqrt(ans));
+f=inline('exp(x)*sin(x)','x');
+ans1=comtrapezium(f,n,1,2);
+true=int(f1,x1,1,2);
+disp(n);
+disp(ans1);
+disp(vpa(true));
+\end{lstlisting}
+According to the error formula, we get the value of $n$ is $716$.
+
+By running the program, the calculated result we get is $4.487560317$, the true value is $4.487560335$.
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+First, we define the function $comsimpson(f,n,a,b)$.
+\begin{lstlisting}
+function ans=comsimpson(f,n,a,b)
+	format long;
+	h=(b-a)/n;
+	sum=f(a);
+	for i=a+h:h:b-h 
+		sum=sum+2*f(i);
+	end
+	for i=a+h/2:h:b-h/2 
+		sum=sum+4*f(i);
+	end
+	sum=sum+f(b);
+	ans=sum*h/6;
+end
+\end{lstlisting}
+Next, we get the value of $n$ according to the formula and 	get the answer by calculation.
+\begin{lstlisting}
+format long e
+f=inline('exp(x)*sin(x)','x');
+n=1;
+ans1=comsimpson(f,n,1,3);
+ans2=comsimpson(f,2*n,1,3);
+while abs(ans1-ans2)>10^(-8)
+	n=n+1;
+	ans1=comsimpson(f,n,1,3);
+	ans2=comsimpson(f,2*n,1,3);
+end
+disp(ans1);
+disp(ans2);
+\end{lstlisting}
+\end{homeworkProblem}
+By running the program, the calculated result we get is $10.95017031$.
+\end{CJK*}
+\end{document}

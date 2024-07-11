@@ -1,0 +1,14 @@
+X=-1:0.2:1;
+Y=exp(X.^2);
+m=-1:0.02:1;
+est1=lagrange(X,Y,m);
+real1=exp(m.^2);
+error1=est1-real1;
+subplot(1,2,1)
+plot(m,error1,'b');
+n=-2:0.04:2;
+est2=lagrange(X,Y,n);
+real2=exp(n.^2);
+error2=est2-real2;
+subplot(1,2,2)
+plot(n,error2,'r');

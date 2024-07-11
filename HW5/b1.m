@@ -1,0 +1,11 @@
+syms x2;
+f2=(sin(x2))^2;
+f=inline('(sin(x))^2','x');
+ans1=trap(f,0,pi/2);
+ans2=simpson(f,0,pi/2);
+true=int(f2,x2,0,pi/2);
+disp(ans1);
+disp(ans2);
+disp(vpa(true));
+disp(vpa(true-ans1));
+disp(vpa(true-ans2));

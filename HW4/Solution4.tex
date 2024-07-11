@@ -1,0 +1,197 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage[toc,page]{appendix}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amssymb}
+\usepackage{bbm}
+\usepackage{extarrows}
+\usepackage{mathrsfs}
+\usepackage{CJK}
+\usepackage{dsfont}
+\usepackage[hidelinks]{hyperref}
+\usepackage{apacite}
+\usepackage{multirow, booktabs}  
+\usepackage{threeparttable}
+\usepackage{dcolumn}
+\usepackage{longtable}
+\usepackage{threeparttablex}
+\usepackage{tabu}
+\usepackage{pdfpages}
+\usepackage{float}
+\usepackage{changepage}
+\usepackage{mathtools}
+\usepackage{listings}
+\lstset{language=Matlab}
+\usetikzlibrary{automata,positioning}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+\setlength{\parindent}{0em}
+\linespread{1.1}
+
+\pagestyle{myheadings}
+\markboth{HW Solution}{Shengze Xu}
+\chead{\hmwkClass\ : \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+\newcommand{\hmwkTitle}{HW4 Solution}
+\newcommand{\hmwkDueDate}{\today}
+\newcommand{\hmwkClass}{Scientific Computing}
+\newcommand{\hmwkClassInstructor}{Professor Lai}
+\newcommand{\hmwkAuthorName}{Xu Shengze 3190102721}
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{\hmwkDueDate }\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ }}
+    \vspace{3in}
+}
+
+\author{\textbf{\hmwkAuthorName}}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+% Various Helper Commands
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\lstset{
+	basicstyle=\tt,%行号
+	numbers=left,
+	rulesepcolor=\color{red!20!green!20!blue!20},
+	escapeinside=``,
+	xleftmargin=2em,xrightmargin=2em, aboveskip=1em,%背景框
+	framexleftmargin=1.5mm,
+	frame=shadowbox,%背景色
+	backgroundcolor=\color[RGB]{245,245,244},%样式
+	keywordstyle=\color{blue}\bfseries,
+	identifierstyle=\bf,
+	numberstyle=\color[RGB]{0,192,192},
+	commentstyle=\it\color[RGB]{96,96,96},
+	stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},%显示空格
+	showstringspaces=false
+}
+
+\begin{document}
+\begin{CJK*}{GBK}{song}
+\lstset{language=C}
+\maketitle
+
+\pagebreak
+
+\begin{homeworkProblem}
+Assume that $x_1$,$x_2$ are two least square solutions of $Ax=b$, therefore we have $A^TAx_1=A^Tb=A^TAx_2$.
+
+From the equation above, we have $A^TA(x_1-x_2)=0$, so $(x_1-x_2)^TA^TA(x_1-x_2)=0$, i.e.$(A(x_1-x_2))^T(A(x_1-x_2))=0$, then $||A(x_1-x_2)||=0$, so $A(x_1-x_2)=0$.
+
+Therefore, we have $Ax_1=Ax_2$.
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+$\sum_{i=1}^{r}||Ax-b_i||^2=\sum_{i=1}^{r}(Ax-b_i)^T(Ax-b_i)\\=\sum_{i=1}^{r}(x^TA^TAx+b_i^Tb_i-x^TA^Tb_i-b_i^TAx)\\=r(||Ax||^2-(Ax)^T(\frac{1}{r}\sum_{i=1}^{r}b_i)-(\frac{1}{r}\sum_{i=1}^{r}b_i)^T(Ax))+\sum_{i=1}^{r}||b_i||^2\\=r||Ax-\frac{1}{r}\sum_{i=1}^{r}b_i||^2+\sum_{i=1}^{r}||b_i||^2-\frac{1}{r}||\sum_{i=1}^{r}b_i||^2$
+
+Therefore, when $\sum_{i=1}^{r}||Ax-b_i||^2$ take minimum, $x$ is also the least square solution of $Ax=\frac{1}{r}\sum_{i=1}^{r}b_i$, vice versa.
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+Assume that the $m\times{m}$ coefficient matrix is $X$, where $X_{i,j}=x_i^{j-1}, i,j={1,2,...,m}$. 
+
+$\alpha=[a_0,a_1,...,a_{m-1}]^T$, $y=[y_1,y_2,...,y_m]^T$.
+
+It's easy to find that $|X|\neq0$, so $X$ is invertible and $X\alpha=y$ has the unique solution $\alpha=X^{-1}y$.
+
+For Lagrange interpolation polynomial $f(x)$, its degree is $m-1$.
+
+Let $g(x)=p(x)-f(x)$, so $g(x_i)=p(x_i)-f(x_i)=0$. It's obvious that the degree of $g(x)\leq{m-1}$. Meanwhile, $g(x)$ has $m$ roots, therefore $g(x)$ must be $0$, further, we have $p(x)=f(x)$.
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+\begin{lstlisting}
+format rat
+x=[-3;-2;-1;0;1;2;3];
+y=[4;2;3;0;-1;-2;-5];
+X=ones(7,3);
+X(:,2)=x;
+X(:,3)=x.^2;
+a=(X'*X)\(X'*y);
+disp(a);
+\end{lstlisting}
+According to the program, we have $a_0=\frac{2}{3}=0.667,a_1=-\frac{39}{28}=-1.393,a_2=-\frac{11}{84}=-0.131$.
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+\begin{lstlisting}
+format rat
+x=[1.02;0.95;0.87;0.77;0.67;0.56;0.44;0.30;0.16;0.01];
+y=[0.39;0.32;0.27;0.22;0.18;0.15;0.13;0.12;0.13;0.15];
+X=ones(10,5);
+X(:,1)=y.^2;
+X(:,2)=x.*y;
+X(:,3)=x;
+X(:,4)=y;
+a=(X'*X)\(X'*(x.^2));
+disp(a);
+\end{lstlisting}
+According to the program, we have $a=-\frac{651}{247}=-2.636,b=\frac{3511}{24442}=0.144,c=\frac{343}{622}=0.551,d=\frac{1995}{619}=3.223,e=-\frac{1216}{2809}=-0.433$.
+\end{homeworkProblem}
+\end{CJK*}
+\end{document}

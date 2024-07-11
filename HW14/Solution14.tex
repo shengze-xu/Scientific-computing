@@ -1,0 +1,206 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage[toc,page]{appendix}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amssymb}
+\usepackage{bbm}
+\usepackage{extarrows}
+\usepackage{mathrsfs}
+\usepackage{CJK}
+\usepackage{dsfont}
+\usepackage[hidelinks]{hyperref}
+\usepackage{apacite}
+\usepackage{multirow, booktabs}  
+\usepackage{threeparttable}
+\usepackage{dcolumn}
+\usepackage{longtable}
+\usepackage{threeparttablex}
+\usepackage{tabu}
+\usepackage{pdfpages}
+\usepackage{float}
+\usepackage{changepage}
+\usepackage{mathtools}
+\usepackage{listings}
+
+\usetikzlibrary{automata,positioning}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+\setlength{\parindent}{0em}
+\linespread{1.1}
+
+\pagestyle{myheadings}
+\markboth{HW Solution}{Shengze Xu}
+\chead{\hmwkClass\ : \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+\newcommand{\hmwkTitle}{HW14 Solution}
+\newcommand{\hmwkDueDate}{\today}
+\newcommand{\hmwkClass}{Scientific Computing}
+\newcommand{\hmwkClassInstructor}{Professor Lai}
+\newcommand{\hmwkAuthorName}{Xu Shengze 3190102721}
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{\hmwkDueDate }\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ }}
+    \vspace{3in}
+}
+
+\author{\textbf{\hmwkAuthorName}}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+% Various Helper Commands
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\lstset{
+	basicstyle=\tt,%行号
+	numbers=left,
+	rulesepcolor=\color{red!20!green!20!blue!20},
+	escapeinside=``,
+	xleftmargin=2em,xrightmargin=2em, aboveskip=1em,%背景框
+	framexleftmargin=1.5mm,
+	frame=shadowbox,%背景色
+	backgroundcolor=\color[RGB]{245,245,244},%样式
+	keywordstyle=\color{blue}\bfseries,
+	identifierstyle=\bf,
+	numberstyle=\color[RGB]{0,192,192},
+	commentstyle=\it\color[RGB]{96,96,96},
+	stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},%显示空格
+	showstringspaces=false
+}
+
+\begin{document}
+\lstset{language=MATLAB}
+\maketitle
+	
+\pagebreak
+	
+\begin{homeworkProblem}
+Trapezoidal formula is $y_{n+1}=y_n+\frac{h}{2}(f(x_n,y_n)+f(x_{n+1},y_{n+1}))$.
+
+We know that $T_{n+1}=y(x_{n+1})-[y(x_n)+\frac{h}{2}(f(x_n,y(x_n))+f(x_{n+1},y(x_{n+1})))]$.
+
+According to Taylor expansion, we get the following relationship,
+\begin{equation}
+\left\{
+\begin{aligned}
+y(x_{n+1})&=y(x_n)+hy'(x_n)+\frac{h^2}{2}y''(x_n)+\frac{h^3}{6}y'''(\xi_{n_1})\\
+y(x_n)&=y(x_{n+1})-hy'(x_{n+1})+\frac{h^2}{2}y''(x_{n+1})-\frac{h^3}{6}y'''(\xi_{n_2})
+\end{aligned}
+\right.
+\end{equation}
+
+We have $T_{n+1}=y(x_{n+1})-y(x_n)+\frac{h}{2}(y'(x_n)+y'(x_{n+1}))$, substitute the relationship of the above equations and we know that $T_{n+1}=\frac{h^3}{12}[y'''(\xi_{n_1})+y'''(\xi_{n_2})]+\frac{h^2}{4}[y''(x_{n})-y''(x_{n+1})]$.
+
+Meanwhile, we have $y''(x_{n})-y''(x_{n+1})=-hy'''(\xi_{n_3})$, so we have $T_{n+1}=\frac{h^3}{12}[y'''(\xi_{n_1})+y'''(\xi_{n_2})-3y'''(\xi_{n_3})]$, and there must be $\xi_n$ satisfying that $y'''(\xi_n)=-(y'''(\xi_{n_1})+y'''(\xi_{n_2})-3y'''(\xi_{n_3}))$.
+
+Finally, we have $T_{n+1}=-\frac{h^3}{12}y'''(\xi_n)$, where $\xi_n\in[x_n,x_{n+1}]$.
+\end{homeworkProblem}
+	
+\begin{homeworkProblem}
+\begin{itemize}
+\item[(a)]According to the question, we have $\frac{dy}{3-2y}=dx$, integrate both sides and we have $-\frac{1}{2}\ln|3-2y|=x+c_1$. Meanwhile, we have $y(1)=2$, so $c_1=-1$, we simplify to get that  $y=\frac{3}{2}+\frac{1}{2}e^{-2(x-1)}$.
+
+\item[(b)]We have $y_{n+1}=y_n+\frac{h}{2}(f(x_n,y_n)+f(x_{n+1},y_{n+1}))$ and $f(x_n,y_n)=3-2y_n$, so $y_{n+1}=y_n+\frac{h}{2}(3-2y_n+3-2y_{n+1})$, then $(1+h)y_{n+1}=(1-h)y_n+3h$, we simplify to get that $y_{n+1}=\frac{1-h}{1+h}y_n+\frac{3h}{1+h}$.
+
+\item[(c)]We have $f(x,y)=3-2y$. The truncation error of step $n+1$ is $|y(x_{n+1})-y_{n+1}|\leq|y(x_n)-y_n|+\frac{h}{2}|f(x_n,y(x_n))-f(x_n,y_n)|+\frac{h}{2}|f(x_{n+1},y(x_{n+1}))-f(x_{n+1},y_{n+1})|+|T_{n+1}|\leq|y(x_n)-y_n|+\frac{h}{2}\cdot2|y(x_n)-y_n|+\frac{h}{2}\cdot2|y(x_{n+1})-y_{n+1}|+|T_{n+1}|$.
+
+Assume that $|y(x_n)-y_n|=e_n$ and we have $y_{n+1}\leq\frac{1+h}{1-h}y_n+|T_{n+1}|$, so we have the following formula, $e_{n+1}\leq\frac{1+h}{1-h}e_n+\frac{|T_{n+1}|}{1-h}\leq\frac{1+h}{1-h}e_n+\frac{1}{1-h}\frac{h^3}{12}M$, where $M$ is the upper bound of $y'''(\xi_n)$.
+
+Therefore, we know that  $e_n\leq\frac{1+h}{1-h}e_{n-1}+\frac{1}{1-h}\frac{h^3}{12}M\leq(\frac{1+h}{1-h})^ne_0+\frac{1}{1-h}\frac{h^3}{12}M(1+(\frac{1+h}{1-h})^1+(\frac{1+h}{1-h})^2+\cdots+(\frac{1+h}{1-h})^{n-1})$. We can easily know that $e_0=0$, so simplify the above formula and we know that $e_n\leq\frac{h^2}{24}M(e^{\frac{2h}{1-h}(n-1)}-1)\to\frac{h^2}{24} M(e^{\frac{2}{1-h}}-1)$. 
+
+When $h\to0$, we have $e_n\to0$, further, $y_n\to y(x)$.
+
+\item[(d)]According to the principle, write the following program.
+\begin{lstlisting}
+format long e;
+for m=1:5 
+	h=10^(-m); 
+	y=2; 
+	for i=1:10^m 
+		y=(1-h)*y/(1+h)+3*h/(1+h);
+	end
+	real=3/2+1/2*exp(-2);
+	disp(m);
+	disp(y); 
+	disp(y-real); 
+end
+\end{lstlisting}
+Run the program, we get the following results.
+
+$m:1$, calculated value:$1.567215316374655$, error:$-4.523252436512415\times10^{-4}$.
+
+$m:2$, calculated value:$1.567663130321896$, error:$-4.511296410658616\times10^{-6}$.
+
+$m:3$, calculated value:$1.567667596506614$, error:$-4.511169260368320\times10^{-8}$.
+
+$m:4$, calculated value:$1.567667641167568$, error:$-4.507381134999378\times10^{-10}$.
+
+$m:5$, calculated value:$1.567667641614879$, error:$-3.427702566227708\times10^{-12}$.
+\end{itemize}
+\end{homeworkProblem}
+	
+
+\end{document}

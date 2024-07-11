@@ -1,0 +1,225 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage[toc,page]{appendix}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amssymb}
+\usepackage{bbm}
+\usepackage{extarrows}
+\usepackage{mathrsfs}
+\usepackage{CJK}
+\usepackage{dsfont}
+\usepackage[hidelinks]{hyperref}
+\usepackage{apacite}
+\usepackage{multirow, booktabs}  
+\usepackage{threeparttable}
+\usepackage{dcolumn}
+\usepackage{longtable}
+\usepackage{threeparttablex}
+\usepackage{tabu}
+\usepackage{pdfpages}
+\usepackage{float}
+\usepackage{changepage}
+\usepackage{mathtools}
+\usepackage{listings}
+
+\usetikzlibrary{automata,positioning}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+\setlength{\parindent}{0em}
+\linespread{1.1}
+
+\pagestyle{myheadings}
+\markboth{HW Solution}{Shengze Xu}
+\chead{\hmwkClass\ : \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+\newcommand{\hmwkTitle}{HW12 Solution}
+\newcommand{\hmwkDueDate}{\today}
+\newcommand{\hmwkClass}{Scientific Computing}
+\newcommand{\hmwkClassInstructor}{Professor Lai}
+\newcommand{\hmwkAuthorName}{Xu Shengze 3190102721}
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{\hmwkDueDate }\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ }}
+    \vspace{3in}
+}
+
+\author{\textbf{\hmwkAuthorName}}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+% Various Helper Commands
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\lstset{
+	basicstyle=\tt,%行号
+	numbers=left,
+	rulesepcolor=\color{red!20!green!20!blue!20},
+	escapeinside=``,
+	xleftmargin=2em,xrightmargin=2em, aboveskip=1em,%背景框
+	framexleftmargin=1.5mm,
+	frame=shadowbox,%背景色
+	backgroundcolor=\color[RGB]{245,245,244},%样式
+	keywordstyle=\color{blue}\bfseries,
+	identifierstyle=\bf,
+	numberstyle=\color[RGB]{0,192,192},
+	commentstyle=\it\color[RGB]{96,96,96},
+	stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},%显示空格
+	showstringspaces=false
+}
+
+\begin{document}
+\lstset{language=MATLAB}
+\maketitle
+
+\pagebreak
+
+\begin{homeworkProblem}
+Let $f(x)=3x^2-e^x$, then $f(x)$ is continuous on $R$. $f(0)=-1<0$, $f(1)=3-e>0$, so $3x^2-e^x=0$ has root on $[0,1]$, so we can take $a=0$ and $b=1$ to satisfy the problem.
+
+From $f(x)=0$ we get $x=\sqrt{\frac{1}{3}e^x}=\varphi(x)$, so we do iterative $x_{n+1}=\varphi(x_n)$, i.e.$x_{n+1}=\sqrt{\frac{1}{3}e^{x_n}}$. Take the derivative of $\varphi(x)$, we get $\varphi'(x)=\frac{1}{2}\sqrt{\frac{1}{3}e^{x}}$. It's obvious that $\varphi'(x)$ is increasing on $[0,1]$, so $|\varphi'(x)|<\max{|\varphi'(0)|,|\varphi'(1)|}<1$, therefore the iterative method converges.
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+Assume that $x_n=\sqrt{2+\sqrt{2+\cdots+\sqrt{2}}}$, than we know that $x_{n+1}=\sqrt{2+x_n}$ and $x_1=\sqrt{2}$. Take the derivative of $\sqrt{2+x}$, we can easily know that $|(\sqrt{2+x})'|=|\frac{1}{2\sqrt{2+x}}|<1$ when $x>0$, so the iteration coverges.
+
+Assume that $\lim\limits_{n\to\infty}=\xi$, then we have $\xi=\sqrt{2+\xi}$, so $\xi=2$, i.e.$\lim\limits_{n\to\infty}\sqrt{2+\sqrt{2+\cdots+\sqrt{2}}}=2$.
+
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+First, we write the function program of bisection method.
+\begin{lstlisting}
+function xc=bisection(f,a,b,eps)
+	while (b-a)/2>eps
+		c=(a+b)/2;     
+		if f(c)==0        
+			break 
+		end
+		if f(a)*f(c)<0   
+			b=c;
+		else                  
+			a=c;
+		end
+	end
+	xc=(a+b)/2;
+end
+\end{lstlisting}
+Then we substitute the functional equation to solve the answer.
+\end{homeworkProblem}
+\begin{lstlisting}
+format long e;
+syms x;
+f=inline("x-2^(-x)","x");
+g=inline("exp(x)-x^2+3*x-2","x");
+xc1=bisection(f,0,1,10^(-10));
+xc2=bisection(g,0,1,10^(-10));
+fprintf('解为%.11f\n',xc1);
+fprintf('解为%.11f\n',xc2);
+\end{lstlisting}
+Run the program and get the following solution:
+\begin{itemize}
+\item[(1)]$x=0.6411857445$.
+
+\item[(2)]$x=0.2575302855$.
+\end{itemize}
+
+\begin{homeworkProblem}
+First, write the program according to the title.
+\begin{lstlisting}
+format long e;
+x=1.5;
+eps=1e-12;
+N=10000; 
+cnt=0;
+while cnt<N
+	x1=func(x);
+	cnt=cnt+1;
+	if abs(x1-x)<eps
+		break;
+	end
+	x=x1;
+end
+fprintf('共迭代%d次,解为%.11f\n',cnt,x1);
+\end{lstlisting}
+The iterative function program used in the above program is as follows.
+\begin{lstlisting}
+function x = func(x)
+	x=1+1/(x*x);
+	%x=(1+x*x)^(1/3);
+	%x=(1/(1-x))^(1/2);
+end
+\end{lstlisting}
+According to the related mathematical theories and the results of program operation, we have the following conclusions.
+\begin{itemize}
+\item[(a)]Converges at $x_0=1.5$, a total of $56$ iterations, root is $x=1.4655712319$.
+	
+\item[(b)]Converges at $x_0=1.5$, a total of $32$ iterations, root is $x=1.4655712319$.
+
+\item[(c)]Does not converge at $x_0=1.5$.
+\end{itemize}
+\end{homeworkProblem}
+\end{document}

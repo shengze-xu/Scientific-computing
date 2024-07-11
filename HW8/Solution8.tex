@@ -1,0 +1,307 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage[toc,page]{appendix}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amssymb}
+\usepackage{bbm}
+\usepackage{extarrows}
+\usepackage{mathrsfs}
+\usepackage{CJK}
+\usepackage{dsfont}
+\usepackage[hidelinks]{hyperref}
+\usepackage{apacite}
+\usepackage{multirow, booktabs}  
+\usepackage{threeparttable}
+\usepackage{dcolumn}
+\usepackage{longtable}
+\usepackage{threeparttablex}
+\usepackage{tabu}
+\usepackage{pdfpages}
+\usepackage{float}
+\usepackage{changepage}
+\usepackage{mathtools}
+\usepackage{listings}
+
+\usetikzlibrary{automata,positioning}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+\setlength{\parindent}{0em}
+\linespread{1.1}
+
+\pagestyle{myheadings}
+\markboth{HW Solution}{Shengze Xu}
+\chead{\hmwkClass\ : \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+\newcommand{\hmwkTitle}{HW8 Solution}
+\newcommand{\hmwkDueDate}{\today}
+\newcommand{\hmwkClass}{Scientific Computing}
+\newcommand{\hmwkClassInstructor}{Professor Lai}
+\newcommand{\hmwkAuthorName}{Xu Shengze 3190102721}
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{\hmwkDueDate }\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ }}
+    \vspace{3in}
+}
+
+\author{\textbf{\hmwkAuthorName}}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+% Various Helper Commands
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\lstset{
+	basicstyle=\tt,%行号
+	numbers=left,
+	rulesepcolor=\color{red!20!green!20!blue!20},
+	escapeinside=``,
+	xleftmargin=2em,xrightmargin=2em, aboveskip=1em,%背景框
+	framexleftmargin=1.5mm,
+	frame=shadowbox,%背景色
+	backgroundcolor=\color[RGB]{245,245,244},%样式
+	keywordstyle=\color{blue}\bfseries,
+	identifierstyle=\bf,
+	numberstyle=\color[RGB]{0,192,192},
+	commentstyle=\it\color[RGB]{96,96,96},
+	stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},%显示空格
+	showstringspaces=false
+}
+
+\begin{document}
+\lstset{language=MATLAB}
+\maketitle
+
+\pagebreak
+
+\begin{homeworkProblem}
+The augmented matrix of the system of equations is as follows:
+\begin{equation}
+\left[
+\begin{array}{cccc|c}
+	6  & 2 & 1  & -1 & 6  \\
+	2  & 4 & 1  & 0  & -1 \\
+	1  & 1 & 4  & -1 & 5  \\
+	-1 & 0 & -1 & 3  & -5
+\end{array}
+\right]
+\end{equation}
+
+We perform the first transformation,
+\begin{equation}
+	\left[
+	\begin{array}{cccc|c}
+		6  & 2 & 1  & -1 & 6  \\
+		0  & \frac{10}{3} & \frac{2}{3}  & \frac{1}{3}  & -3 \\
+		0  & \frac{2}{3} & \frac{23}{6}  & -\frac{5}{6} & 4  \\
+		0 & \frac{1}{3} & -\frac{5}{6} & \frac{17}{6}  & -4
+	\end{array}
+	\right]
+\end{equation}
+
+Next, we perform the second transformation,
+\begin{equation}
+	\left[
+	\begin{array}{cccc|c}
+		6  & 2 & 1  & -1 & 6  \\
+		0  & \frac{10}{3} & \frac{2}{3}  & \frac{1}{3}  & -3 \\
+		0  & 0 & \frac{37}{10}  & -\frac{9}{10} &  \frac{23}{5} \\
+		0 & 0 & -\frac{9}{10} & \frac{14}{5}  & -\frac{37}{10}
+	\end{array}
+	\right]
+\end{equation}
+
+Then, we perform the third transformation,
+\begin{equation}
+	\left[
+	\begin{array}{cccc|c}
+		6  & 2 & 1  & -1 & 6  \\
+		0  & \frac{10}{3} & \frac{2}{3}  & \frac{1}{3}  & -3 \\
+		0  & 0 & \frac{37}{10}  & -\frac{9}{10} &  \frac{23}{5} \\
+		0 & 0 & 0 & \frac{191}{74}  & -\frac{191}{74}
+	\end{array}
+	\right]
+\end{equation}
+
+Now we can easily get the solution of the system of equations:
+\begin{equation}
+	\left\{
+	\begin{aligned}
+		x_1&=1\\
+		x_2&=-1\\
+		x_3&=1\\
+		x_4&=-1
+	\end{aligned}
+	\right.
+\end{equation}
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+We write $A$ as follow:
+\begin{equation}
+	A=\left[\begin{array}{cccc}
+		a_{11} & a_{12} & \cdots & a_{1n} \\
+	    &a_{22}  & \cdots &a_{2n}  \\
+		&  & \ddots & \vdots \\
+		& &  &a_{nn}
+	\end{array}\right]
+\end{equation}
+Assume that $B$ is the inverse of $A$ and we define $B$ like $A$ above, then we have:
+\begin{equation}
+	\left[\begin{array}{cccc}
+		a_{11} & a_{12} & \cdots & a_{1n} \\
+		&a_{22}  & \cdots &a_{2n}  \\
+		&  & \ddots & \vdots \\
+		& &  &a_{nn}
+	\end{array}\right]
+	\left[\begin{array}{cccc}
+		b_{11} & b_{12} & \cdots & b_{1n} \\
+		&b_{22}  & \cdots &b_{2n}  \\
+		&  & \ddots & \vdots \\
+		& &  &b_{nn}
+	\end{array}\right]
+	=I
+\end{equation}
+
+We get the relation:
+\begin{equation}
+	\sum_{k=i}^{n}a_{ik}b_{kj}=c_{ij}=\begin{cases}
+		1&,i=j\\
+		0&,i\neq j
+	\end{cases}
+\end{equation}
+Firstly, by observing the last line we know $b_{nn}=\frac{1}{a_{nn}}$, further we could easily get $b_{ii}=\frac{1}{a_{ii}}$.
+
+Next we consider the penultimate line and get the relation $a_{n-1,n-1}b_{n-1,n}+a_{n-1,n}b_{n,n}=0$, then we know $b_{n-1,n}=-\frac{a_{n-1,n}}{a_{n-1,n-1}a_{n,n}}$.
+
+For the $l^{th}$ line from the bottom, we have $\sum_{k=l}^{n}a_{lk}b_{kj}=c_{lj}$. When $j\geq l+1$, we have $\sum_{k=l}^{n}a_{lk}b_{kj}=0$, then $a_{ll}b_{lj}+\sum_{k=l+1}^{n}a_{lk}b_{kj}=0$, so $b_{lj}=-\frac{\sum_{k=l+1}^{n}a_{lk}b_{kj}}{a_{ll}}$ for the other elements are known quantities.
+
+Replace subscript, we get the recurrence expression, $b_{ii}=\frac{1}{a_{ii}}$ and $b_{ij}=-\frac{\sum_{k=i+1}^{n}a_{ik}b_{kj}}{a_{ii}}(j>i)$. 
+
+What's interesting is that, unlike usual, this recursive expression is pushed from back to front.
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+Assume that the LU decomposition of A is not unique, then we can write A as $A=L_1U_1=L_2U_2$.
+
+Because $L_i,U_i(i=1,2)$ are upper triangular matrices, they have inverse matrix, and $L_2^{-1}L_1=U_1^{-1}U_2$.
+
+Meanwhile, the inverse of the upper triangular matrix is still the upper triangular matrix, and the inverse of the lower triangular matrix is still the lower triangular matrix.
+
+Therefore, $L_2^{-1}L_1=U_1^{-1}U_2=E$, then we have $L_1=L_2,U_1=U_2$, the proposition is proved.
+
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+Assume that $A=LL^{T}$ and write the code according to the formula.
+\begin{lstlisting}
+A=zeros(10,10);
+A(1,1)=9;A(1,2)=-4;A(1,3)=1;
+A(2,1)=-4;A(2,2)=6;A(2,3)=-4;A(2,4)=1;
+for i=3:10-2
+	A(i,i-2)=1;A(i,i-1)=-4;A(i,i)=6;A(i,i+1)=-4;A(i,i+2)=1;
+end 
+A(9,7)=1;A(9,8)=-4;A(9,9)=5;A(9,10)=-2;
+A(10,8)=1;A(10,9)=-2 ;A(10,10)=1;
+disp(A);
+
+L=zeros(10,10);
+for i=10:-1:1
+	L(i,i)=A(i,i);
+	for k=i+1:1:10
+		L(i,i)=L(i,i)-L(i,k)*L(i,k);
+	end
+	L(i,i)=sqrt(L(i,i));
+	for j=1:1:i-1
+		L(j,i)=A(i,j);
+		for k=i+1:1:10
+			L(j,i)=L(j,i)-L(i,k)*L(j,k);
+		end
+	L(j,i)=L(j,i)*1.0/L(i,i);
+	end
+end
+disp(L);
+\end{lstlisting}
+
+By running the program, we get the matrix L:
+\begin{equation}
+	L=\left[
+	\begin{array}{cccccccccc}
+		2 & -2 & 1  & 0  & 0  & 0  & 0  & 0  & 0  & 0  \\
+		0 & 1  & -2 & 1  & 0  & 0  & 0  & 0  & 0  & 0  \\
+		0 & 0  & 1  & -2 & 1  & 0  & 0  & 0  & 0  & 0  \\
+		0 & 0  & 0  & 1  & -2 & 1  & 0  & 0  & 0  & 0  \\
+		0 & 0  & 0  & 0  & 1  & -2 & 1  & 0  & 0  & 0  \\
+		0 & 0  & 0  & 0  & 0  & 1  & -2 & 1  & 0  & 0  \\
+		0 & 0  & 0  & 0  & 0  & 0  & 1  & -2 & 1  & 0  \\
+		0 & 0  & 0  & 0  & 0  & 0  & 0  & 1  & -2 & 1  \\
+		0 & 0  & 0  & 0  & 0  & 0  & 0  & 0  & 1  & -2 \\
+		0 & 0  & 0  & 0  & 0  & 0  & 0  & 0  & 0  & 1 
+	\end{array}
+	\right]
+\end{equation}
+\end{homeworkProblem}
+\end{document}

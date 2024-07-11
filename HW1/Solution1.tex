@@ -1,0 +1,271 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage[toc,page]{appendix}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amssymb}
+\usepackage{bbm}
+\usepackage{extarrows}
+\usepackage{mathrsfs}
+\usepackage{CJK}
+\usepackage{dsfont}
+\usepackage[hidelinks]{hyperref}
+\usepackage{apacite}
+\usepackage{multirow, booktabs}  
+\usepackage{threeparttable}
+\usepackage{dcolumn}
+\usepackage{longtable}
+\usepackage{threeparttablex}
+\usepackage{tabu}
+\usepackage{pdfpages}
+\usepackage{float}
+\usepackage{changepage}
+\usepackage{mathtools}
+\usepackage{listings}
+
+\usetikzlibrary{automata,positioning}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+\setlength{\parindent}{0em}
+\linespread{1.1}
+
+\pagestyle{myheadings}
+\markboth{HW Solution}{Shengze Xu}
+\chead{\hmwkClass\ : \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+\newcommand{\hmwkTitle}{HW1 Solution}
+\newcommand{\hmwkDueDate}{\today}
+\newcommand{\hmwkClass}{Scientific Computing}
+\newcommand{\hmwkClassInstructor}{Professor Lai}
+\newcommand{\hmwkAuthorName}{Xu Shengze 3190102721}
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{\hmwkDueDate }\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ }}
+    \vspace{3in}
+}
+
+\author{\textbf{\hmwkAuthorName}}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+% Various Helper Commands
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\lstset{
+	basicstyle=\tt,%行号
+	numbers=left,
+	rulesepcolor=\color{red!20!green!20!blue!20},
+	escapeinside=``,
+	xleftmargin=2em,xrightmargin=2em, aboveskip=1em,%背景框
+	framexleftmargin=1.5mm,
+	frame=shadowbox,%背景色
+	backgroundcolor=\color[RGB]{245,245,244},%样式
+	keywordstyle=\color{blue}\bfseries,
+	identifierstyle=\bf,
+	numberstyle=\color[RGB]{0,192,192},
+	commentstyle=\it\color[RGB]{96,96,96},
+	stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},%显示空格
+	showstringspaces=false
+}
+
+\begin{document}
+\begin{CJK*}{GBK}{song}
+\lstset{language=C}
+\maketitle
+
+\pagebreak
+
+\begin{homeworkProblem}
+\begin{itemize}
+\item[(1)]bounds of absolute error:$\frac{1}{2}\times10^{-4}$ 
+
+bounds of relative error: $\frac{1}{8}\times10^{-2}$ 
+
+number of significant figures:3
+\item[(2)]bounds of absolute error:$\frac{1}{2}\times10^{-4}$ 
+
+bounds of relative error: $\frac{1}{8}\times10^{-3}$ 
+
+number of significant figures:4
+\item[(3)]bounds of absolute error:$\frac{1}{2}\times10^{-2}$ 
+
+bounds of relative error: $\frac{1}{6}\times10^{-3}$ 
+
+number of significant figures:4
+\item[(4)]bounds of absolute error: $\frac{1}{2}$ 
+
+bounds of relative error: $\frac{1}{8}\times10^{-3}$ 
+
+number of significant figures:4
+\end{itemize}
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+\begin{itemize}
+\item[(1)]$\tan(\arctan(x+1)-\arctan(x))=\frac{(x+1)-(x)}{1+x(x+1)}=\frac{1}{1+x+x^{2}}$
+
+therefore,we have $\arctan(x+1)-\arctan(x)=\arctan(\frac{1}{1+x+x^{2}})$
+\item[(2)]$\ln(x-\sqrt{x^{2}-1})=\frac{1}{ln(x+\sqrt{x^{2}-1})}$
+\item[(3)]$\frac{\sin{x}}{x-\sqrt{x^{2}-1}}=\sin{x}(x+\sqrt{x^{2}-1})$
+\end{itemize}
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+Assume that the approximation is $\phi^*$,hence $\phi^*-\phi=\delta$.
+
+If $\cos\phi=0$, then $\phi=\frac{\pi}{2}$or$\frac{3\pi}{2}$, now $\frac{\cos(\phi^*)-\cos(\phi)}{\cos(\phi)}$ approaches to be infinite.
+
+If $\cos\phi\neq0$, then $\frac{\cos(\phi^*)-\cos(\phi)}{\cos(\phi)}=\frac{\cos(\phi+\delta)-\cos(\phi)}{\cos(\phi)}=\frac{\cos\delta\cos\phi-\sin\delta\sin\phi}{\cos\phi}-1=\cos\delta-1-\sin\delta\tan\phi$
+
+Another way, relative error is $\frac{d(\cos\phi)}{\cos\phi}=\frac{(\cos\phi)^{'}}{\cos\phi}d\phi=-\delta\tan\phi$
+
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+The result is 6.127$\times${$10^{-13}$}
+\begin{lstlisting}
+#include <stdio.h>
+#include <math.h>
+
+int main(){
+  double a,b;	
+  double result;
+  scanf("%lf %lf",&a,&b);
+  result=b*b/(-a+sqrt(a*a+b*b));
+  printf("%.3e",result);
+  return 0;
+} 
+\end{lstlisting}	
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+The result is $x_{1}=-2.824\times10^{11},x_{2}=1.062\times10^{-11}$
+\begin{lstlisting}
+#include <stdio.h>
+#include <math.h>
+
+int main(){
+  double a,b,c;
+  double x1,x2;
+  scanf("%lf %lf %lf",&a,&b,&c);
+  if(b>0){
+    x1=(-b-sqrt(b*b-4*a*c))/(2*a);
+    x2=c/(a*x1);
+  }
+  else{
+    x1=(-b+sqrt(b*b-4*a*c))/(2*a);
+    x2=c/(a*x1);
+  }//here we ignore the condition that b==0
+  printf("%.3e %.3e",x1,x2);
+  return 0;
+} 
+\end{lstlisting}	
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+The result is -0.00050024507964763210.
+
+The equivalent expression is $P(x)=\frac{1-x^{100}}{1+x}$.
+
+According to the expression, the result is -0.00050024507964746079.
+
+The error is $-1.713039\times10^{-16}$.
+\begin{lstlisting}       
+#include <stdio.h>
+double horner(int coef[],int n, double x);
+
+int main(){
+  double result;
+  int i=0;
+  int a[100]={0};
+  for(i=0;i<100;i++){
+  	if(i%2==0){
+  	  a[i]=1;
+  	}
+  	else{
+      a[i]=-1;
+  	}
+  }
+  result=horner(a,100,1.00001);
+  printf("%.20lf",result); 
+  return 0;
+}
+
+double horner(int coef[],int n,double x){
+  int i;
+  double result;
+  result=coef[n-1];
+  for(i=1;i<=n-1;i++){
+	result=result*x+coef[n-1-i];
+  }
+  return result;
+}
+\end{lstlisting}
+
+\end{homeworkProblem}
+
+\end{CJK*}
+\end{document}
